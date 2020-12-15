@@ -1,3 +1,5 @@
+require 'chunky_png'
+
 require_relative 'cell'
 
 class Grid
@@ -79,5 +81,28 @@ class Grid
     end
 
     output
+  end
+
+  def to_png(cell_size=30)
+    background_color = ChunkyPNG::Color::BLACK
+    grid_color = ChunkyPNG::Color::WHITE
+
+    image = ChunkyPNG::Image.new(columns * cell_size, rows * cell_size, background_color)
+
+    each_cell do |cell|
+      x1 = cell.row * cell_size
+      y1 = cell.column * cell_size
+
+      puts x1
+      puts y1
+
+      x2 = x1 + cell_size
+      y2 = y1 + cell_size
+
+      image.line(x2, y1, x2, y2, grid_color) unless cell.linked?(cell.east)
+      image.line(x1, y2, x2, y2, grid_color) unless cell.linked?(cell.south)
+    end
+
+    image.save("generated_maze.png")
   end
 end
