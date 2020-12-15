@@ -87,17 +87,19 @@ class Grid
     background_color = ChunkyPNG::Color::BLACK
     grid_color = ChunkyPNG::Color::WHITE
 
-    image = ChunkyPNG::Image.new(columns * cell_size, rows * cell_size, background_color)
+    image = ChunkyPNG::Image.new(columns * cell_size + 1, rows * cell_size + 1, background_color)
 
+    counter = 0
     each_cell do |cell|
-      x1 = cell.row * cell_size
-      y1 = cell.column * cell_size
-
-      puts x1
-      puts y1
+      counter += 1
+      x1 = cell.column * cell_size
+      y1 = cell.row * cell_size
 
       x2 = x1 + cell_size
       y2 = y1 + cell_size
+
+      image.line(x1, y1, x2, y1, grid_color) unless cell.north
+      image.line(x1, y1, x1, y2, grid_color) unless cell.west
 
       image.line(x2, y1, x2, y2, grid_color) unless cell.linked?(cell.east)
       image.line(x1, y2, x2, y2, grid_color) unless cell.linked?(cell.south)
