@@ -47,4 +47,37 @@ class Grid
       end
     end
   end
+
+  # Prints an ASCII representation of the grid
+  # +---+---+---+
+  # |   |   |   |
+  # +   +---+   +
+  # |       |   |
+  # +---+---+---+
+  def to_s
+    output = "+" + "---+" * columns + "\n"
+
+    each_row do |row|
+
+      # body section of cell per row
+      row_content = "|"
+      row.each do |cell|
+        row_content += "   "
+        row_content += cell.linked?(cell.east) ? " " : "|"
+      end
+
+      row_content += "\n"
+
+      # southern border section of cell
+      row.each do |cell|
+        row_content += "+"
+        row_content += cell.linked?(cell.south) ? "   " : "---"
+      end
+      row_content += "+\n"
+
+      output += row_content
+    end
+
+    output
+  end
 end
