@@ -83,7 +83,7 @@ class Grid
     output
   end
 
-  def to_png(cell_size=30)
+  def to_png(file_path, cell_size=30)
     background_color = ChunkyPNG::Color::BLACK
     grid_color = ChunkyPNG::Color::WHITE
 
@@ -105,6 +105,6 @@ class Grid
       image.line(x1, y2, x2, y2, grid_color) unless cell.linked?(cell.south)
     end
 
-    image.save("generated_maze.png")
+    image.save(file_path)
   end
 end
