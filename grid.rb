@@ -50,6 +50,10 @@ class Grid
     end
   end
 
+  def contents_of(cell)
+    "   "
+  end
+
   # Prints an ASCII representation of the grid
   # +---+---+---+
   # |   |   |   |
@@ -64,7 +68,7 @@ class Grid
       # body section of cell per row
       row_content = "|"
       row.each do |cell|
-        row_content += "   "
+        row_content += contents_of(cell)
         row_content += cell.linked?(cell.east) ? " " : "|"
       end
 
